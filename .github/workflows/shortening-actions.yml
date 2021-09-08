@@ -73,6 +73,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/shortening_words-${{ env.sw_version }}-py3-none-any.whl
+          asset_path: ./dist/shortening_words-${{ github.ref }}.${{ env.sw_version }}-py3-none-any.whl
           asset_name: shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_content_type: application/x-wheel+zip
