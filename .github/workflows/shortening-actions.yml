@@ -77,24 +77,3 @@ jobs:
           asset_path: ./dist/shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_name: shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_content_type: application/x-wheel+zip
-
-  # deploy:
-  #   needs: release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - name: Set up Python
-  #     uses: actions/setup-python@v1
-  #     with:
-  #       python-version: '3.x'
-  #   - name: Install dependencies
-  #     run: |
-  #       python -m pip install --upgrade pip
-  #       pip install setuptools wheel twine
-  #   - name: Build and publish
-  #     env:
-  #       TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-  #       TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-  #     run: |
-  #       python setup.py sdist bdist_wheel
-  #       twine upload dist/*
