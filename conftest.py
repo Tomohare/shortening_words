@@ -1,8 +1,8 @@
 import pytest
-import _pytest
 from _pytest.config import ExitCode
 
 NUMBER_OF_ACCEPTABLE_FAILURE = 3
+
 
 @pytest.hookimpl()
 def pytest_sessionfinish(session, exitstatus):

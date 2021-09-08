@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import argparse
+# import argparse
 import pyphen
-from random import randint as rand
-from functools import reduce
 
 
 class Shortening_Words(object):
@@ -18,10 +16,10 @@ class Shortening_Words(object):
 
     def insert(self, index, element, _list):
         pos = 1
-        for l in _list:
-            if l[index] >= element[index]:
+        for item in _list:
+            if item[index] >= element[index]:
                 pos += 1
-            elif l[index] < element[index]:
+            elif item[index] < element[index]:
                 pos -= 1
                 break
         _list.insert(pos, element)
