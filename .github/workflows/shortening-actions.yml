@@ -42,6 +42,7 @@ jobs:
       with:
         fail_ci_if_error: true
   release:
+    needs: build
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -51,15 +52,28 @@ jobs:
           repository: Tomohare/shortening_words
       - name: Install dependencies
         run: |
+          sudo add-apt-repository ppa:jyrki-pulliainen/dh-virtualenv
+          sudo apt-get update
+          sudo apt-get install -y dpkg-dev dh-python debhelper python3-virtualenv dh-virtualenv
           git fetch --prune --unshallow --tags
           python -m pip install --upgrade pip
-          pip install setuptools wheel versioneer
-      - name: Build it
+          pip install setuptools wheel versioneer stdeb pyphen
+      - name: Install extra
+        run: |
+          tempfolder=$(pwd)
+          cd extra/make-deb
+          sudo python setup.py install
+          cd $tempfolder
+      - name: Build
         run: |
           git stash
-          versioneer install
+          yes Y | make-deb --python-version "3.9" --postinst-commands "echo nothing"
+          #versioneer install
           python setup.py sdist bdist_wheel
           echo "sw_version="$(sed -n "s/\s\"version\":\s*\"v\(.*\)\"/\1/p" build/lib/shortening_words/_version.py) >> $GITHUB_ENV
+      # - name: Build deb
+      #   run: |
+      #     dpkg-buildpackage -us -uc
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -73,22 +87,32 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload release WHL
-        id: upload-release-asset
+        id: upload-release-whl
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./dist/shortening_words-${{ env.sw_version }}-py3-none-any.whl
-          asset_name: shortening_words-${{ env.sw_version }}-py3-none-any.whl
+          asset_name: shortening-words-${{ env.sw_version }}-py3-none-any.whl
           asset_content_type: application/x-wheel+zip
       - name: Upload release tar.gz
-        id: upload-release-asset
+        id: upload-release-tar_gz
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/shortening_words-${{ env.sw_version }}.tar.gz
-          asset_name: shortening_words-${{ env.sw_version }}.tar.gz
+          asset_path: ./dist/shortening-words-${{ env.sw_version }}.tar.gz
+          asset_name: shortening-words-${{ env.sw_version }}.tar.gz
           asset_content_type: application/tar+gzip
+      # - name: Upload release deb package
+      #   id: upload-release-deb
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: /home/runner/work/shortening_words/shortening-words_${{ env.sw_version }}_amd64.deb
+      #     asset_name: shortening-words_${{ env.sw_version }}_amd64.deb
+      #     asset_content_type: application/vnd.debian.binary-package

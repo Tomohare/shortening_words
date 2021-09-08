@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+{% if dh_virtualenv_options %}
+override_dh_virtualenv:
+	dh_virtualenv {{ ' '.join(dh_virtualenv_options) }}
+{% endif %}

@@ -21,7 +21,7 @@ Example:
 """
 
 setup(
-    name='shortening_words',
+    name='shortening-words',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     description='Shortening Words',
@@ -30,6 +30,8 @@ setup(
     url='https://github.com/Tomohare/shortening_words',
     author='Fabricio Santolin da Silva',
     author_email='fabricio.santolin-da-silva@al-enterprise.com',
+    maintainer='Fabricio Santolin da Silva',
+    maintainer_email='fabricio.santolin-da-silva@al-enterprise.com',
 
     license='MIT',
 
