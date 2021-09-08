@@ -1,0 +1,16 @@
+Source: shortening_words
+Section: utils
+Priority: optional
+Maintainer: Fabricio Santolin da Silva <fabricio.santolin-da-silva@al-enterprise.com>
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 9~), 
+	python3-all (>= 3.9), python3-setuptools, 
+	python3-ply, python3-pygments
+X-Python3-Version: >= 3.9
+
+Package: python3-shortening_words
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: The shortening_words package for Python 3 Debian,
+ for shortening words.
+ .
