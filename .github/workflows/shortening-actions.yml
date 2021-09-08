@@ -72,7 +72,7 @@ jobs:
             Changes in this Release
           draft: false
           prerelease: false
-      - name: Upload release asset
+      - name: Upload release WHL
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
         env:
@@ -82,3 +82,13 @@ jobs:
           asset_path: ./dist/shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_name: shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_content_type: application/x-wheel+zip
+      - name: Upload release tar.gz
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/shortening_words-${{ env.sw_version }}.tar.gz
+          asset_name: shortening_words-${{ env.sw_version }}.tar.gz
+          asset_content_type: application/tar+gzip
