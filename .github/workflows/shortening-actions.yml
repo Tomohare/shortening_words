@@ -64,6 +64,7 @@ jobs:
       - name: Build it
         run: |
           python setup.py sdist bdist_wheel
+          echo "sw_version="$(git describe --tags --dirty --always) >> $GITHUB_ENV
       - name: Upload release asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -71,8 +72,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/*.whl
-          asset_name: ${{ github.ref }}.whl
+          asset_path: ./dist/shortening_words-${{ env.sw_version }}-py3-none-any.whl
+          asset_name: shortening_words-${{ env.sw_version }}-py3-none-any.whl
           asset_content_type: application/x-wheel+zip
 
   # deploy:
