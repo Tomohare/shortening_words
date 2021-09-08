@@ -59,7 +59,7 @@ jobs:
           git stash
           versioneer install
           python setup.py sdist bdist_wheel
-          echo "sw_version="$(sed -n "s/\s\"version\":\s*\"\(.*\)\"/\1/p" build/lib/shortening_words/_version.py) >> $GITHUB_ENV
+          echo "sw_version="$(sed -n "s/\s\"version\":\s*\"v\(.*\)\"/\1/p" build/lib/shortening_words/_version.py) >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
