@@ -7,8 +7,8 @@ import pyphen
 class Shortening_Words(object):
     """docstring for Shortening_Words"""
 
-    def __init__(self, words, max_len):
-        self.dic = pyphen.Pyphen(lang='en')
+    def __init__(self, words, max_len, lang):
+        self.dic = pyphen.Pyphen(lang=lang)
         listWords = words.split(" ")
         self.max_len = int(max_len) - (len(listWords)
                                        if int(max_len) < len(words) else 0)
@@ -100,6 +100,11 @@ class Shortening_Words(object):
 #                         help="word to shortening",
 #                         type=str,
 #                         action='store', default='')
+#     parser.add_argument('--lang',
+#                         dest='lang',
+#                         help="Language to use (ISO 639)",
+#                         type=str,
+#                         action='store', default='en')
 #     args = parser.parse_args()
 
 #     print(Shortening_Words(**vars(args)).phrase)

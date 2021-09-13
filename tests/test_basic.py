@@ -12,5 +12,10 @@ except Exception as e:
 
 def test_short_one_word():
     """Green to G"""
-    resp = sw.shortit("Green", 1)
+    resp = sw.shortit("Green", 1, lang="en")
     assert resp == "G."
+
+def test_short_one_word():
+    """Green to G"""
+    resp = sw.shortit("Barbeiro", 7, lang="pt_br")
+    assert resp == "Barbei."

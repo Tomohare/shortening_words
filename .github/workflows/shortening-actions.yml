@@ -71,6 +71,7 @@ jobs:
           #versioneer install
           python setup.py sdist bdist_wheel
           echo "sw_version="$(sed -n "s/\s\"version\":\s*\"v\(.*\)\"/\1/p" build/lib/shortening_words/_version.py) >> $GITHUB_ENV
+          cat build/lib/shortening_words/_version.py
       # - name: Build deb
       #   run: |
       #     dpkg-buildpackage -us -uc
